@@ -1,0 +1,18 @@
+{
+    "version": "1.0.0",
+    "summary": "Facebook API in ELM",
+    "repository": "https://github.com/vic/elm-facebook.git",
+    "license": "Apache-2",
+    "source-directories": [
+        "src"
+    ],
+    "exposed-modules": [
+        "Facebook"
+    ],
+    "native-modules": true,
+    "dependencies": {
+        "elm-lang/core": "2.0.0 <= v < 4.0.0",
+        "evancz/elm-effects": "2.0.1 <= v < 3.0.0"
+    },
+    "elm-version": "0.16.0 <= v < 0.17.0"
+}

@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <script src="elm.js"></script>
+    <script src="/_reactor/debug.js"></script>
+    <script>
+
+      var app = Elm.fullscreen(Elm.Main, {
+        // Must initialize this signal with initial state
+        facebookEvents: ['NoOp', null]
+      });
+
+      window.fbAsyncInit = function() {
+        var sendEvent = function (eventName, jsonValue) {
+          app.ports.facebookEvents.send([eventName, jsonValue])
+        }
+        var redirectFbEvent = function (fbName, elmName) {
+          FB.Event.subscribe(fbName, sendEvent.bind(null, elmName))
+        }
+
+        // At least subscribe to this event if you want
+        // elm-facebook to automatically keep its User model
+        redirectFbEvent('auth.statusChange', 'StatusChanged');
+
+        // And finally, signal Elm that Facebook API has loaded and can be initialized
+        sendEvent('Init', {
+          appId      : '542370552616612',
+          xfbml      : true,
+          version    : 'v2.5',
+          status     : true,
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+  </body>
+</html>
